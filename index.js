@@ -1,7 +1,8 @@
+const { URL, Request, Response } = require('node-fetch');
+
 module.exports = {
   async fetch(req) {
     try {
-      const { URL } = require('url');
       const url = new URL(req.url);
       const splitted = url.pathname.replace(/^\/*/, '').split('/');
       const address = splitted[0];
@@ -9,7 +10,7 @@ module.exports = {
       url.hostname = address;
       url.protocol = 'https:';
       const fetch = require('node-fetch');
-      return await fetch(url.toString(), req);
+      return await fetch(new Request(url, req));
     } catch (e) {
       return new Response(e);
     }
